@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+// Função recursiva para Torre (horizontal para a direita)
+void moverTorre(int casaAtual, int casasTotais) {
+    if(casaAtual > casasTotais) return; // condição de parada
+    printf("Torre - Casa %d: Direita\n", casaAtual);
+    moverTorre(casaAtual + 1, casasTotais); // chamada recursiva
+}
+
+// Função recursiva para Rainha (horizontal para a esquerda)
+void moverRainha(int casaAtual, int casasTotais) {
+    if(casaAtual > casasTotais) return; // condição de parada
+    printf("Rainha - Casa %d: Esquerda\n", casaAtual);
+    moverRainha(casaAtual + 1, casasTotais); // chamada recursiva
+}
+
+// Função recursiva para Bispo (diagonal Cima-Direita) com loops aninhados
+void moverBispo(int casasVerticais, int casasHorizontais) {
+    if(casasVerticais <= 0) return; // condição de parada do loop vertical
+
+    for(int h = 1; h <= casasHorizontais; h++) { // loop horizontal interno
+        printf("Bispo - Movimento vertical %d, horizontal %d: Cima, Direita\n", casasVerticais, h);
+    }
+    moverBispo(casasVerticais - 1, casasHorizontais); // recursão vertical
+}
+
+// Função para Cavalo (movimento em L: duas casas para cima, uma para direita) usando loops complexos
+void moverCavalo(int movimentosVerticais, int movimentosHorizontais) {
+    printf("Movimento do Cavalo (em L - 2 Cima, 1 Direita):\n");
+
+    int v = 0; // contador vertical
+    while(v < movimentosVerticais) {
+        int h = 0; // contador horizontal
+        for(h = 0; h < movimentosHorizontais; h++) {
+            if(v == movimentosVerticais - 1 && h == 0) { // última combinação
+                printf("Cavalo - Movimento final: Cima, Cima, Direita\n");
+                break;
+            }
+            printf("Cavalo - Movimento %d,%d: Cima\n", v + 1, h + 1);
+        }
+        v++;
+    }
+}
+
+int main() {
+    // Definindo números de casas
+    int casasTorre = 5;
+    int casasBispo = 5;
+    int casasRainha = 8;
+    int cavaloVertical = 2;
+    int cavaloHorizontal = 1;
+
+    printf("Simulacao de movimentos das pecas de xadrez (Nivel Mestre):\n\n");
+
+    // --- Torre ---
+    moverTorre(1, casasTorre);
+    printf("\n");
+
+    // --- Bispo ---
+    moverBispo(casasBispo, casasBispo); // loop horizontal igual ao vertical para simular diagonal
+    printf("\n");
+
+    // --- Rainha ---
+    moverRainha(1, casasRainha);
+    printf("\n");
+
+    // --- Cavalo ---
+    moverCavalo(cavaloVertical, cavaloHorizontal);
+    printf("\nSimulacao concluida!\n");
+
+    return 0;
+}

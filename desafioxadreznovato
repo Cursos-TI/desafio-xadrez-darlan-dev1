@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    // Definindo o número de casas a se mover para cada peça
+    int casasTorre = 5;   // Torre se move 5 casas para a direita
+    int casasBispo = 5;   // Bispo se move 5 casas na diagonal (Cima-Direita)
+    int casasRainha = 8;  // Rainha se move 8 casas para a esquerda
+
+    printf("Simulacao de movimentos das pecas de xadrez:\n\n");
+
+    // --- Torre (movimento horizontal para a direita) usando for ---
+    printf("Movimento da Torre (Direita):\n");
+    for(int i = 1; i <= casasTorre; i++) {
+        printf("Casa %d: Direita\n", i);
+    }
+
+    printf("\n");
+
+    // --- Bispo (movimento diagonal para cima e direita) usando while ---
+    printf("Movimento do Bispo (Diagonal Cima-Direita):\n");
+    int passoBispo = 1;
+    while(passoBispo <= casasBispo) {
+        printf("Casa %d: Cima, Direita\n", passoBispo);
+        passoBispo++;
+    }
+
+    printf("\n");
+
+    // --- Rainha (movimento para a esquerda) usando do-while ---
+    printf("Movimento da Rainha (Esquerda):\n");
+    int passoRainha = 1;
+    do {
+        printf("Casa %d: Esquerda\n", passoRainha);
+        passoRainha++;
+    } while(passoRainha <= casasRainha);
+
+    printf("\nSimulacao concluida!\n");
+
+    return 0;
+}

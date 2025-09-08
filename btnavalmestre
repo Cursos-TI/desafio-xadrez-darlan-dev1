@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+#define TAB_SIZE 10
+#define SHIP_SIZE 3
+
+// Função para sobrepor a habilidade no tabuleiro
+void aplicarHabilidade(int tabuleiro[TAB_SIZE][TAB_SIZE], int habilidade[5][5], int origemLinha, int origemColuna) {
+    int i, j;
+    int tamanho = 5;
+    int meio = tamanho / 2;
+
+    for (i = 0; i < tamanho; i++) {
+        for (j = 0; j < tamanho; j++) {
+            int linhaTab = origemLinha - meio + i;
+            int colTab = origemColuna - meio + j;
+
+            // Verifica se está dentro dos limites do tabuleiro
+            if (linhaTab >= 0 && linhaTab < TAB_SIZE && colTab >= 0 && colTab < TAB_SIZE) {
+                if (habilidade[i][j] == 1) {
+                    // Marca área afetada com 5
+                    if (tabuleiro[linhaTab][colTab] == 0) { // Não sobrescreve navio
+                        tabuleiro[linhaTab][colTab] = 5;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int tabuleiro[TAB_SIZE][TAB_SIZE];
+    int i, j;
+
+    // Inicializa o tabuleiro com 0 (água)
+    for (i = 0; i < TAB_SIZE; i++) {
+        for (j = 0; j < TAB_SIZE; j++) {
+            tabuleiro[i][j] = 0;
+        }
+    }
+
+    // Posicionando navios
+    // Navio horizontal
+    for (i = 0; i < SHIP_SIZE; i++) {
+        tabuleiro[1][2 + i] = 3;
+    }
+    // Navio vertical
+    for (i = 0; i < SHIP_SIZE; i++) {
+        tabuleiro[5 + i][7] = 3;
+    }
+    // Navio diagonal descendente
+    for (i = 0; i < SHIP_SIZE; i++) {
+        tabuleiro[3 + i][3 + i] = 3;
+    }
+    // Navio diagonal ascendente
+    for (i = 0; i < SHIP_SIZE; i++) {
+        tabuleiro[6 - i][0 + i] = 3;
+    }
+
+    // Matrizes de habilidade (5x5)
+    int cone[5][5] = {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1},
+        {0,0,0,0,0},
+        {0,0,0,0,0}
+    };
+
+    int cruz[5][5] = {
+        {0,0,1,0,0},
+        {0,0,1,0,0},
+        {1,1,1,1,1},
+        {0,0,1,0,0},
+        {0,0,1,0,0}
+    };
+
+    int octaedro[5][5] = {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1},
+        {0,1,1,1,0},
+        {0,0,1,0,0}
+    };
+
+    // Pontos de origem das habilidades
+    int origemConeLinha = 2, origemConeColuna = 2;
+    int origemCruzLinha = 7, origemCruzColuna = 5;
+    int origemOctaedroLinha = 5, origemOctaedroColuna = 2;
+
+    // Aplicando habilidades
+    aplicarHabilidade(tabuleiro, cone, origemConeLinha, origemConeColuna);
+    aplicarHabilidade(tabuleiro, cruz, origemCruzLinha, origemCruzColuna);
+    aplicarHabilidade(tabuleiro, octaedro, origemOctaedroLinha, origemOctaedroColuna);
+
+    // Exibindo o tabuleiro
+    printf("Tabuleiro Batalha Naval com habilidades:\n\n");
+    for (i = 0; i < TAB_SIZE; i++) {
+        for (j = 0; j < TAB_SIZE; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
